@@ -54,25 +54,23 @@ char menu_title [NUMBER_OF_ELEMENTS] [MAX_SIZE] = {
 
 //if the password has " then \need to be added before it > \"
 char menu_password [NUMBER_OF_ELEMENTS] [MAX_SIZE] = { 
- { " !\"#$%&'()*" },  //0
- { "+,-./012345" },   //1
- { "6789:;<=>?@" },   //2
- { "ABCDEFGHIJK" },   //3
- { "LMNOPQRSTUV" },   //4
- { "WXYZ[\]^_`a" },   //5
- { "bcdefghijkl" },   //6
- { "mnopqrstuvw" },   //7
- { "xyz{|}~ !\"#" },  //8
- { "Password#9" },    //9
+  { " Password#0\"" },//0
+  { "Password#1" },   //1
+  { "Password#2" },   //2
+  { "Password#3" },   //3
+  { "Password#4" },   //4
+  { "Password#5" },   //5
+  { "Password#6" },   //6
+  { "Password#7" },   //7
+  { "Password#8" },   //8
+  { "Password#9" },   //9
 //  
 
 };
 
-
-//char password_decoded [MAX_SIZE] = {"00000000000"};
   
 
-int password[2] = {0,0}; //00-93
+int pin[2] = {0,0}; //00-93
 
 void setup() {
   // put your setup code here, to run once:
@@ -95,32 +93,32 @@ void setup() {
 
 
   
-  //Getting password
+  //Getting pin
   int printed_num = -1;
-  int password_i = 0;
+  int pin_i = 0;
   SellectAllandDel();
-  DigiKeyboard.print("Please enter 2 digit password");
+  DigiKeyboard.print("Please enter 2 digit pin");
   DigiKeyboard.delay(500);
   while(true){
-    if(password[password_i] > 9){password[password_i]=0;}
-    if(password[password_i] < 0){password[password_i]=9;}
+    if(pin[pin_i] > 9){pin[pin_i]=0;}
+    if(pin[pin_i] < 0){pin[pin_i]=9;}
     
-    if(printed_num != password[password_i]){
+    if(printed_num != pin[pin_i]){
       //delete last message:
       SellectAllandDel();
       //print new message:
-      for(int i=0; i<=password_i; i++){
-        //DigiKeyboard.print(char(password[i]));
-        DigiKeyboard.print(password[i]);
+      for(int i=0; i<=pin_i; i++){
+        //DigiKeyboard.print(char(pin[i]));
+        DigiKeyboard.print(pin[i]);
       }
-      printed_num = password[password_i];
+      printed_num = pin[pin_i];
     }
     
     
     //UP button
     if (digitalRead(buttonUP) ){
       //DigiKeyboard.print("UP pressed");
-      password[password_i] = password[password_i] + 1;
+      pin[pin_i] = pin[pin_i] + 1;
       DigiKeyboard.delay(debounceDelay);
       
     }
@@ -128,21 +126,21 @@ void setup() {
     //OK button
     if (digitalRead(buttonOK) ) {
       //DigiKeyboard.print("OK pressed");
-      if(password_i==0){
+      if(pin_i==0){
         printed_num = -1;
-        password_i = 1;//0>1
+        pin_i = 1;//0>1
       }
-      else if(password_i==1){
+      else if(pin_i==1){
         SellectAllandDel();
-        DigiKeyboard.print("Password accepted: ");
-        //printing password
+        DigiKeyboard.print("pin accepted: ");
+        //printing pin
         if(ENorDEcryption == 1){
           DigiKeyboard.print("+");
         }else{
           DigiKeyboard.print("-");
         }
-        DigiKeyboard.print(password[0]);
-        DigiKeyboard.print(password[1]);       
+        DigiKeyboard.print(pin[0]);
+        DigiKeyboard.print(pin[1]);       
         DigiKeyboard.delay(1000);
         break;
       }
@@ -153,7 +151,7 @@ void setup() {
     //DOWN button
     if (digitalRead(buttonDOWN)){
       //DigiKeyboard.print("DOWN pressed");
-      password[password_i] = password[password_i] - 1;
+      pin[password_i] = pin[password_i] - 1;
       DigiKeyboard.delay(debounceDelay);
     }
   }
@@ -247,7 +245,7 @@ void loop() {
 
 void decryption(char password_to_decode []){
   for (int i = 0; i < MAX_SIZE-1 ; i++){ //MAX_SIZE
-    int new_char = password_to_decode[i]+ ENorDEcryption*((password[0]*10+password[1])) ; 
+    int new_char = password_to_decode[i]+ ENorDEcryption*((pin[0]*10+pin[1])) ; 
   
     if( new_char > 126){
       DigiKeyboard.print( char( new_char - 126 + 31 ) );
