@@ -267,21 +267,6 @@ void SellectAllandDel(){
   DigiKeyboard.sendKeyStroke(KEY_BACKSPACE);
   DigiKeyboard.delay(debounceDelay);
 }
-/*LED check:
-Works  : 0,1,2,4
-Doesn't: 3,5*/
 
-/*buttonPin check:
-Works  : 0, 2,
-Doesn't: 1, 4, 5
-Strangly works: 3*/
-
-/*Encoder - Tick func
-Works: 0,2
-Doesn't: 1
-isclick is reversed: 3
-no start 4
-restarts 5
-*/
 
 //Паролятор :)
